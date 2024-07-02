@@ -513,7 +513,7 @@ extension nearbyLandmarksVC : CLLocationManagerDelegate{
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type") // Important for the Express bodyParser middleware function so that it can parse the JSON request object.
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type") // Important for the Express bodyParser middleware function so that it can parse the JSON request object into a JS object
         
         let json: [String: Any] = ["table": tableName, "name": name]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
