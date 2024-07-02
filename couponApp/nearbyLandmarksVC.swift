@@ -513,7 +513,7 @@ extension nearbyLandmarksVC : CLLocationManagerDelegate{
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type") // Important for the Express bodyParser middleware function so that it can parse the JSON request object.
         
         let json: [String: Any] = ["table": tableName, "name": name]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
@@ -615,8 +615,11 @@ extension nearbyLandmarksVC : CLLocationManagerDelegate{
                    for item in filteredItems {
                        
                                if let name = item.name {
+                                   
                                    group.enter() // Enter the group before starting an async task
+                                   
                                    strongSelf.fetchCoupon(tableName: query, name: name) { coupon in
+                                       
                                        if let coupon = coupon {
                                            let address = CNPostalAddressFormatter.string(from: item.placemark.postalAddress!, style: .mailingAddress)
                                            let landmark = Landmark(name: name, address: address, code: coupon.code, discount: coupon.discount)
